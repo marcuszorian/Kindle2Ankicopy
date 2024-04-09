@@ -6,6 +6,7 @@ import os
 import json
 from sudachipy import dictionary
 import urllib.request
+import urllib.error
 import re
 import sqlite3
 from collections import deque
@@ -180,6 +181,12 @@ try:
     timestamps = config["timestamps"].copy()
 except:
     timestamps, config["timestamps"] = {}, {}
+
+try:
+    urllib.request.urlopen('http://localhost:8765', timeout=1)
+except urllib.error.URLError:
+    print("Failed to connect to AnkiConnect. Please ensure that AnkiConnect is installed and Anki is running.")
+
     
 def newCard(config, args):
     global jpod
